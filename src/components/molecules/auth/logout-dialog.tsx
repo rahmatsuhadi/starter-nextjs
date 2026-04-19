@@ -13,11 +13,19 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { LogOut, Loader2 } from "lucide-react";
+import { LogOut, Loader2, LogOutIcon } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 
-export function LogoutDialog({ children }: { children?: React.ReactNode }) {
+export function LogoutDialog({
+  isOpen = false,
+  onClose,
+}: {
+  isOpen?: boolean;
+  onClose: () => void;
+  children?: React.ReactNode;
+}) {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleLogout = async () => {
@@ -36,15 +44,7 @@ export function LogoutDialog({ children }: { children?: React.ReactNode }) {
   };
 
   return (
-    <AlertDialog>
-      <AlertDialogTrigger>
-        {children || (
-          <button className="flex w-full items-center gap-2 px-2 py-1.5 text-sm text-destructive hover:bg-destructive/10 rounded-md transition-colors">
-            <LogOut className="size-4" />
-            <span>Log out</span>
-          </button>
-        )}
-      </AlertDialogTrigger>
+    <AlertDialog open={isOpen} onOpenChange={onClose}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Apakah Anda yakin ingin keluar?</AlertDialogTitle>
